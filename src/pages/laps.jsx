@@ -14,7 +14,7 @@ const Laps = () => {
       setError("");
 
       const { data } = await api.get(`/laps/user?page=${pageNo}&limit=6`);
-      console.log(data)
+      console.log(data);
 
       setLaps(data.laps);
       setPage(data.page);
@@ -38,6 +38,25 @@ const Laps = () => {
     }
   };
 
+  // DELETE all laps
+  const clearAllLaps = async () => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete all laps?"
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      await api.delete("/lap/delete-all");
+      setLaps([]);
+      setPage(1);
+      setTotalPages(1);
+      alert("All laps deleted successfully");
+    } catch (err) {
+      alert(err.response?.data?.error || "Failed to delete laps");
+    }
+  };
+
   useEffect(() => {
     fetchLaps(page);
   }, []);
@@ -45,7 +64,18 @@ const Laps = () => {
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-5xl mx-auto">
-        <h1 className="text-2xl font-bold mb-6">Your Laps</h1>
+        <div className="flex items-center justify-between mb-6">
+          <h1 className="text-2xl font-bold">Your Laps</h1>
+
+          {laps.length > 0 && (
+            <button
+              onClick={clearAllLaps}
+              className="px-3 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+            >
+              Clear All Laps
+            </button>
+          )}
+        </div>
 
         {loading && <p className="text-center">Loading laps...</p>}
         {error && <p className="text-red-500 text-center">{error}</p>}

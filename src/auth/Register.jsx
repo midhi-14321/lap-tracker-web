@@ -1,7 +1,7 @@
 import { useState } from "react";
 import api from "../utils/axiosInstance";
 import { useNavigate } from "react-router-dom";
-import React from 'react'
+import React from "react";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ const Register = () => {
   const [error, setError] = useState("");
 
   const handleRegister = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // stops the browser's default behaviour
     setError("");
 
     try {
@@ -21,7 +21,7 @@ const Register = () => {
         email,
         password,
       });
-      console.log(res)
+
       console.log("Register success:", res.data);
       navigate("/login");
     } catch (err) {

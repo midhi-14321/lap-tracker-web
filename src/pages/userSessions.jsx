@@ -67,6 +67,7 @@ const Sessions = () => {
       <div className="max-w-5xl mx-auto">
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-bold mb-6">Your Sessions</h1>
+
           {sessions.length > 0 && (
             <button
               onClick={clearAllSessions}

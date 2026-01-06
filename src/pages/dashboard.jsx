@@ -3,7 +3,6 @@ import api from "../utils/axiosInstance";
 import React from "react";
 import StatusCard from "./statusCard";
 import ActionButton from "./actionButton";
-import Logout from "../auth/Logout";
 
 const Dashboard = () => {
   const [session, setSession] = useState(null);
@@ -12,70 +11,35 @@ const Dashboard = () => {
   const [error, setError] = useState(null);
   const [restoring, setRestoring] = useState(true);
 
-    // useEffect(() => {
-    //   const restoreSession = async () => {
-    //     try {
-    //       const { data } = await api.get("/session/active");
-    //       if (data.session) {
-    //         setSession({
-    //           sessionId: data.session.id,
-    //           startTime: data.session.startTime,
-    //         });
-    //       }
-    //     } catch (err) {
-    //       console.log("No active session");
-    //     } finally {
-    //       // setRestoring(false);
-    //       setTimeout(() => setRestoring(false), 100);
-    //     }
-    //   };
-    //   restoreSession();
-    // }, []);
-
   useEffect(() => {
-    const restoreSession = async () => {
+    const restoreSessionAndLap = async () => {
       try {
         const { data } = await api.get("/session/active");
 
-        //  Set session IMMEDIATELY if exists
+        // restore session
         if (data.session?.id) {
           setSession({
             sessionId: data.session.id,
             startTime: data.session.startTime,
           });
-          return; // Exit early - no need for finally
+        }
+
+        // restore lap (ONLY if exists)
+        if (data.lap?.lapId) {
+          setLap({
+            lapId: data.lap.lapId,
+            startTime: data.lap.lapStart,
+          });
         }
       } catch (err) {
-        console.log("No active session");
+        console.log("No active session or lap");
+      } finally {
+        setRestoring(false);
       }
-      //  ONLY set restoring false AFTER session is set
-      setRestoring(false);
     };
 
-    restoreSession();
+    restoreSessionAndLap();
   }, []);
-
-  // START SESSION
-  //   const startSession = async () => {
-  //     try {
-  //       setLoading(true);
-  //       setError(null);
-
-  //       const { data } = await api.post("/session/start");
-  //       console.log("SESSION START:", data);
-
-  //       //   setSession(data);
-  //       setSession({
-  //         sessionId: data.sessionId,
-  //         startTime: data.startTime,
-  //       });
-  //     } catch (err) {
-  //       console.error(err);
-  //       setError(err.response?.data?.error || "Failed to start session");
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
 
   const startSession = async () => {
     try {
@@ -142,6 +106,14 @@ const Dashboard = () => {
         startTime: data.lapStart,
       });
     } catch (err) {
+      // restore lap if backend says one exists
+      if (err.response?.data?.lapId) {
+        setLap({
+          lapId: err.response.data.lapId,
+          startTime: err.response.data.lapStart,
+        });
+        return;
+      }
       setError(err.response?.data?.error || "Failed to start lap");
     } finally {
       setLoading(false);

@@ -1,25 +1,33 @@
 import { useState } from "react";
 import api from "../utils/axiosInstance";
+import React from "react";
+import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import React from 'react'
 const Login = () => {
-  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  const { setUser } = useAuth();
+  const navigate = useNavigate();
   const handleLogin = async (e) => {
-    e.preventDefault();
-    setError("");
+    e.preventDefault(); // stop browser's default behaviour
 
     try {
-      const res = await api.post("/auth/login", {
+      const { data } = await api.post("/auth/login", {
         email,
         password,
       });
+      setUser(data.user);
 
-      console.log("Login success:", res.data);
-      navigate("/");
+      //  Check if user is admin and redirect accordingly
+      if (data.user?.role === "admin") {
+        // Redirect to admin dashboard
+        navigate("/admin");
+      } else {
+        // Redirect to normal user dashboard
+        navigate("/");
+      }
     } catch (err) {
       setError(err.response?.data?.error || "Login failed");
     }
@@ -35,7 +43,6 @@ const Login = () => {
         )}
 
         <form onSubmit={handleLogin} className="space-y-4">
-
           <input
             type="email"
             placeholder="Email"

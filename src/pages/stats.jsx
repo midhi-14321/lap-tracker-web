@@ -39,8 +39,8 @@ const Stats = () => {
         <StatCard
           label="Avg Lap Duration"
           value={
-            stats.avgLapDuration
-              ? `${stats.avgLapDuration.toFixed(2)} sec`
+            Number(stats.avgLapDuration)>0
+              ? `${Number(stats.avgLapDuration).toFixed(2)} sec`
               : "—"
           }
         />
