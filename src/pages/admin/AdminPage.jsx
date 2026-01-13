@@ -76,7 +76,7 @@ const AdminPage = ({ defaultTab = "stats" }) => {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Header */}
-      <div className="bg-red-600 text-white p-6">
+      <div className="bg-cyan-600 text-white p-6">
         <div className="max-w-7xl mx-auto">
           <h1 className="text-3xl font-bold">🛡️ Admin Panel</h1>
           <p className="text-red-100 mt-1">
@@ -93,7 +93,7 @@ const AdminPage = ({ defaultTab = "stats" }) => {
               <button
                 key={tab.id}
                 onClick={() => handleTabClick(tab.id)}
-                className={`px-6 py-3 rounded-lg font-medium transition-all ${
+                className={`px-6 py-3 rounded-lg font-medium transition-all cursor-pointer ${
                   activeTab === tab.id
                     ? "bg-red-600 text-white"
                     : "bg-gray-100 text-gray-700 hover:bg-gray-200"

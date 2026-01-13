@@ -155,7 +155,7 @@ const AdminLaps = () => {
     } catch (err) {
       console.error("Failed to fetch laps:", err);
     } finally {
-      setLoading(false);
+      setLoading(false);  
     }
   };
 

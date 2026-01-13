@@ -2,12 +2,14 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Logout from "../auth/Logout";
+import { useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const { user, isAdmin } = useAuth();
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
+  const location = useLocation();
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -20,28 +22,44 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
+  if (location.pathname === "/login" || location.pathname === "/register") {
+    return null;
+  }
+
   return (
     <div className="h-15 bg-white shadow flex items-center px-6 justify-between">
       <h1 className="text-lg font-semibold">Session Tracker</h1>
 
       <div className="flex gap-6 items-center">
-        <button onClick={() => navigate("/")} className="text-blue-500">
+        <button
+          onClick={() => navigate("/")}
+          className="text-blue-500 cursor-pointer"
+        >
           Dashboard
         </button>
-        <button onClick={() => navigate("/sessions")} className="text-blue-500">
+        <button
+          onClick={() => navigate("/sessions")}
+          className="text-blue-500 cursor-pointer"
+        >
           Sessions
         </button>
-        <button onClick={() => navigate("/laps")} className="text-blue-500">
+        <button
+          onClick={() => navigate("/laps")}
+          className="text-blue-500 cursor-pointer"
+        >
           Laps
         </button>
-        <button onClick={() => navigate("/stats")} className="text-blue-500">
+        <button
+          onClick={() => navigate("/stats")}
+          className="text-blue-500 cursor-pointer"
+        >
           Stats
         </button>
 
         {isAdmin && (
           <button
             onClick={() => navigate("/admin")}
-            className="text-red-600 font-semibold bg-red-50 px-4 py-2 rounded-lg hover:bg-red-100"
+            className="text-red-600 font-semibold bg-red-50 px-4 py-2 rounded-lg hover:bg-red-100 cursor-pointer"
           >
             Admin Panel
           </button>
@@ -69,7 +87,7 @@ const Navbar = () => {
                     setOpen(false);
                     navigate("/login");
                   }}
-                  className="w-full px-4 py-2 text-left hover:bg-gray-100"
+                  className="w-full px-4 py-2 text-left hover:bg-gray-100 cursor-pointer"
                 >
                   Login
                 </button>

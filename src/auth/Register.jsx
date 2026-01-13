@@ -30,56 +30,72 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="w-full max-w-md bg-white shadow-xl rounded-xl p-8">
-        <h2 className="text-3xl font-bold text-center mb-6">Register</h2>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-stone-100 to-emerald-300">
+      <div className="w-full max-w-md bg-white shadow-lg rounded-xl p-8 border border-gray-100">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl font-bold text-gray-800">Create Account</h2>
+          <p className="text-gray-600 text-sm mt-1">Join our community</p>
+        </div>
 
         {error && (
-          <p className="text-red-500 text-center mb-4 text-sm">{error}</p>
+          <div className="bg-red-50 text-red-600 text-sm p-3 rounded-lg mb-4">
+            {error}
+          </div>
         )}
 
         <form onSubmit={handleRegister} className="space-y-4">
-          <input
-            type="text"
-            placeholder="Username"
-            className="w-full p-3 rounded-lg border"
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
-          />
+          <div>
+            <input
+              type="text"
+              placeholder="Username"
+              className="w-full p-3 rounded-lg border border-gray-300 focus:border-green-500 focus:ring-1 focus:ring-green-200 outline-none"
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+              required
+            />
+          </div>
 
-          <input
-            type="email"
-            placeholder="Email"
-            className="w-full p-3 rounded-lg border"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          <div>
+            <input
+              type="email"
+              placeholder="Email"
+              className="w-full p-3 rounded-lg border border-gray-300 focus:border-green-500 focus:ring-1 focus:ring-green-200 outline-none"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
 
-          <input
-            type="password"
-            placeholder="Password"
-            className="w-full p-3 rounded-lg border"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <div>
+            <input
+              type="password"
+              placeholder="Password"
+              className="w-full p-3 rounded-lg border border-gray-300 focus:border-green-500 focus:ring-1 focus:ring-green-200 outline-none"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
 
           <button
             type="submit"
-            className="w-full bg-green-600 text-white p-3 rounded-lg text-lg font-semibold hover:bg-green-700"
+            className="w-full bg-green-500 hover:bg-green-600 text-white p-3 rounded-lg font-medium transition duration-200"
           >
             Sign Up
           </button>
         </form>
 
-        <p className="text-center mt-4">
+        <p className="text-center text-gray-600 text-sm mt-6">
           Already have an account?{" "}
-          <a className="text-blue-600" href="/login">
-            Login
+          <a
+            href="/login"
+            className="text-green-600 font-medium hover:text-green-800"
+          >
+            Sign in
           </a>
         </p>
       </div>
     </div>
   );
 };
-
 export default Register;

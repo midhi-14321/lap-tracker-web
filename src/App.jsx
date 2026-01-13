@@ -84,9 +84,7 @@ import Sessions from "./pages/userSessions";
 import Laps from "./pages/laps";
 import Stats from "./pages/stats";
 import AdminPage from "./pages/admin/AdminPage";
-// import AdminUsers from './pages/admin/AdminUsers'
-// import AdminSessions from "./pages/admin/AdminSessions";
-// import AdminLaps from "./pages/admin/AdminLaps";
+
 import Navbar from "./layout/navBar";
 import ProtectedRoute from "./pages/admin/ProtectedRoute";
 
@@ -99,7 +97,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
-          <Route
+          <Route 
             path="/"
             element={
               <ProtectedRoute>
