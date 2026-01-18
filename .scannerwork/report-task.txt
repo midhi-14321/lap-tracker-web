@@ -1,0 +1,6 @@
+projectKey=lap-tracker-web
+serverUrl=http://localhost:9000
+serverVersion=26.1.0.118079
+dashboardUrl=http://localhost:9000/dashboard?id=lap-tracker-web
+ceTaskId=310217d2-087d-471e-9607-9c0e64eefa47
+ceTaskUrl=http://localhost:9000/api/ce/task?id=310217d2-087d-471e-9607-9c0e64eefa47
