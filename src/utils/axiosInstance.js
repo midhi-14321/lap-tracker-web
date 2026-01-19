@@ -2,7 +2,7 @@ import axios from "axios"; // it is a js library used to make HTTP requests(GET,
 
 const api = axios.create({
   // baseURL: "http://localhost:5000/api",
-  baseURL: "https://lap-tracker-backend-1.onrender.com",
+  baseURL: "http://lap-tracker-backend-1.onrender.com",
   withCredentials: true,
 });
 
